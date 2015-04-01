@@ -12,10 +12,16 @@ public:
     Neuron(int inDegree);
     double outputValue;
     void enterData(layer previousLayer);
+    void calculateOutputDelta(double targetValue);
+    void calculateHiddenDelta(layer& nextLayer);
+    void updateWeight(layer& previousLayer);
     
-private:
+private: 
+    static double learningRate;
+    static double changeInWeight;
     vector<double> weights; //make private
-    
+    static double transferFunction(double d);
+    double delta; 
 };
 
 #endif

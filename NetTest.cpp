@@ -17,11 +17,34 @@ int main() {
     d.push_back(1.0);
     n.enterData(d);
 
-    std::cout << "output of inner node 1: " << n.net[0][0].outputValue << "\n";
-    std::cout << "output inner node 2: " << n.net[0][1].outputValue << "\n";
-    std::cout << "output of final node 1: " << n.net[1][0].outputValue << "\n";
-    std::cout << "output of final node 2: " << n.net[1][1].outputValue << "\n";
+    vector<double> tar;
+    tar.push_back(1.1);tar.push_back(1.1);
     
+    double error = (1.1 - n.net[1][0].outputValue) + (1.1 - n.net[1][0].outputValue);
+    cout << "error: " << error << "\n";
+    
+    n.backPropagate(tar);
+    
+    n.enterData(d);
+    
+    error = (1.1 - n.net[1][0].outputValue) + (1.1 - n.net[1][0].outputValue);
+    cout << "error: " << error << "\n";
+    
+    vector<double> tar2;
+    tar2.push_back(1.1);tar2.push_back(1.1);
+    n.backPropagate(tar2);
+//    
+    n.enterData(d);
+    
+    error = (1.1 - n.net[1][0].outputValue) + (1.1 - n.net[1][0].outputValue);
+    cout << "error: " << error << "\n";
+    
+    //output: 
+    //error: 1.2
+    //error: 1.08
+    //error: 0.97
+    //it's going down!!!
+
     return 0;
 }
 

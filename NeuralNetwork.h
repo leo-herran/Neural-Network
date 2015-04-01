@@ -10,11 +10,15 @@ class NeuralNetwork {
     
 public:
     NeuralNetwork(vector<int>& netStructure);
-    vector<double> enterData(vector<double>& input);
-    vector<double> backPropagate(vector<double>& targetValues);
+    void trainNetwork(vector<double>& inputValues, vector<double>& outputValues);
+    void printTotalError();
+    
     vector<layer> net;
     
 private:
+    double totalCurrentError;
+    void enterData(vector<double>& input);
+    void backPropagate(vector<double>& targetValues);
      
 };
 

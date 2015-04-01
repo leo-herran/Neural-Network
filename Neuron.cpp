@@ -6,7 +6,7 @@
 
 Neuron::Neuron(int inDegree) {
     for(int i = 0; i < inDegree; i++) {
-        double w = 0.25; //neurons initialized with arbitrary weight for now. 
+        double w = 0.4; //neurons initialized with arbitrary weight for now. 
         weights.push_back(w);   
     }
 }
@@ -42,11 +42,10 @@ void Neuron::calculateHiddenDelta(layer& nextLayer) {
 void Neuron::updateWeight(layer& previousLayer) {
     for(int i = 0; i < previousLayer.size(); i++) {
         Neuron& n = previousLayer[i];
-        double w = weights[i];
         double change = learningRate * delta * n.outputValue; //*-1.0
         this->weights[i] += change;
         
     }
 }
 
-double Neuron::learningRate = 0.2;
+double Neuron::learningRate = 0.7;

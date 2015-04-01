@@ -2,6 +2,7 @@
 #include<vector>
 #include<cassert>
 #include<iostream>
+#include<stdlib.h>
 
 using namespace std;
 
@@ -20,7 +21,12 @@ NeuralNetwork::NeuralNetwork(vector<int>& netStructure) {
     }
 }
 
-vector<double> NeuralNetwork::enterData(vector<double>& input) {
+void NeuralNetwork::trainNetwork(vector<double>& inputValues, vector<double>& outputValues) {
+    enterData(inputValues);
+    backPropagate(outputValues);
+}
+
+void NeuralNetwork::enterData(vector<double>& input) {
     
     for(int i = 0; i < input.size(); i++) {
         net[0][i].outputValue = input[i]; //no transfer function on input neurons. 
@@ -34,14 +40,15 @@ vector<double> NeuralNetwork::enterData(vector<double>& input) {
     }
 }
 
-vector<double> NeuralNetwork::backPropagate(vector<double>& targetValues) { 
+void NeuralNetwork::backPropagate(vector<double>& targetValues) { 
     layer& outputLayer = net.back();
     
     double totalError = 0.0;
     for(int i = 0; i < outputLayer.size(); i++) {
-        totalError += targetValues[i] - outputLayer[i].outputValue;
+        totalError += abs(targetValues[i] - outputLayer[i].outputValue);
     }
     
+    this->totalCurrentError = totalError;
     
     //calculate output deltas:
     for(int i = 0; i < outputLayer.size(); i++) {
@@ -63,7 +70,9 @@ vector<double> NeuralNetwork::backPropagate(vector<double>& targetValues) {
             net[i][j].updateWeight(net[i-1]);
         }
     }
-    
+}
 
+void NeuralNetwork::printTotalError() {
+    std::cout << totalCurrentError << "\n";
     
 }

@@ -17,6 +17,7 @@ NeuralNetwork::NeuralNetwork(vector<int>& netStructure) {
             Neuron n(previousLayerSize);
             l.push_back(n);
         }
+        
         net.push_back(l);
     }
 }
@@ -47,7 +48,6 @@ void NeuralNetwork::backPropagate(vector<double>& targetValues) {
     for(int i = 0; i < outputLayer.size(); i++) {
         totalError += abs(targetValues[i] - outputLayer[i].outputValue);
     }
-    
     this->totalCurrentError = totalError;
     
     //calculate output deltas:
@@ -57,13 +57,14 @@ void NeuralNetwork::backPropagate(vector<double>& targetValues) {
     
     //calculate hidden deltas:
     for(int i = net.size() - 2; i > 0; i--) {
-        for(int j = 0; j < net[i].size(); j++) {
-            net[i][j].calculateHiddenDelta(net[i+1]);
+        layer& currentLayer = net[i];
+        layer& nextLayer = net[i+1];
+        for(int j = 0; j < currentLayer.size(); j++) {
+            net[i][j].calculateHiddenDelta(nextLayer, j);
         }
     }
     
     //update weights:
-    
     for(int i = net.size() - 1; i > 0; i--) {
         layer l = net[i];
         for(int j = 0; j < l.size(); j++) {

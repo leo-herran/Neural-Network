@@ -13,7 +13,7 @@ public:
     double outputValue;
     void enterData(layer previousLayer);
     void calculateOutputDelta(double targetValue);
-    void calculateHiddenDelta(layer& nextLayer);
+    void calculateHiddenDelta(layer& nextLayer, int index);
     void updateWeight(layer& previousLayer);
     
  

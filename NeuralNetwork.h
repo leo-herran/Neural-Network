@@ -12,14 +12,12 @@ public:
     NeuralNetwork(vector<int>& netStructure);
     void trainNetwork(vector<double>& inputValues, vector<double>& outputValues);
     void printTotalError();
-    
     vector<layer> net;
     
 private:
     double totalCurrentError;
     void enterData(vector<double>& input);
     void backPropagate(vector<double>& targetValues);
-     
 };
 
 #endif	

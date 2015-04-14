@@ -5,35 +5,50 @@
 
 using namespace std;
 
-void runStuff(NeuralNetwork& n) {
-    cout << "TEST" << "\n";
+void runInputOne(NeuralNetwork& n) {
     vector<double> d;
     d.push_back(1.0);
+    d.push_back(0.0);
+    
+    vector<double> target;
+    target.push_back(1.0);
+    
+    n.trainNetwork(d, target);
+    
+    double out = n.net[2][0].outputValue;
+    cout << "output: " << out << "\n";   
+    cout << "error: " << (1.0 - out) << "\n";
+}
+
+
+void runInputTwo(NeuralNetwork& n) {
+    vector<double> d;
+    d.push_back(0.0);
     d.push_back(1.0);
     
-    vector<double> tar;
-    tar.push_back(1.0);
+    vector<double> target;
+    target.push_back(0.0);
     
-    cout << "w1 " << n.net[1][0].weights[0] << "\n";
-    cout << "w2 " << n.net[1][0].weights[1] << "\n";
-    cout << "out " << n.net[1][0].outputValue << "\n";
+    n.trainNetwork(d, target);
     
-    n.trainNetwork(d, tar);
+    double out = n.net[2][0].outputValue;
+    cout << "output: " << out << "\n";
+    cout << "error: " << out << "\n";
     
-    cout << "w1 " << n.net[1][0].weights[0] << "\n";
-    cout << "w2 " << n.net[1][0].weights[1] << "\n";
-    cout << "out " << n.net[1][0].outputValue << "\n";    
 }
 
 int main() {
     
     vector<int> structure;
     structure.push_back(2);
+    structure.push_back(4);
     structure.push_back(1);
     NeuralNetwork n(structure);
 
     for(int i = 0; i < 100; i++) {
-        runStuff(n);
+        runInputOne(n);
+        runInputTwo(n);
+
     }
    
     return 0;

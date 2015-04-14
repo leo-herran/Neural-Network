@@ -7,8 +7,9 @@
 
 Neuron::Neuron(int inDegree) {
     for(int i = 0; i < inDegree; i++) {
-        double w = 0.5; //neurons initialized with arbitrary weight for now. 
-        weights.push_back(w);   
+        //double w = getRandomWeight(); 
+        double w = .4;
+        weights.push_back(w);
     }
 }
 
@@ -45,8 +46,11 @@ void Neuron::updateWeight(layer& previousLayer) {
         Neuron& n = previousLayer[i];
         double change = learningRate * delta * n.outputValue;
         this->weights[i] += change;
-        
     }
 }
 
-double Neuron::learningRate = 0.2; //arbitrary for now. 
+double Neuron::getRandomWeight() {
+    return (rand()/double(RAND_MAX));
+}
+
+double Neuron::learningRate = 0.4; //arbitrary for now. 

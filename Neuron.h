@@ -16,14 +16,13 @@ public:
     void calculateHiddenDelta(layer& nextLayer, int index);
     void updateWeight(layer& previousLayer);
     
- 
+    private:
     static double learningRate;
     static double changeInWeight;
     vector<double> weights; //make private
     static double transferFunction(double d);
-    double delta; 
-    
-    private:
+    static double getRandomWeight();
+    double delta;
 };
 
 #endif

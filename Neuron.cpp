@@ -7,13 +7,12 @@
 
 Neuron::Neuron(int inDegree) {
     for(int i = 0; i < inDegree; i++) {
-        //double w = getRandomWeight(); 
-        double w = .4;
+        double w = getRandomWeight(); 
         weights.push_back(w);
     }
 }
 
-void Neuron::enterData(layer previousLayer){    
+void Neuron::calculateOutput(layer previousLayer){    
     double sum = 0.0;
     for(int i = 0; i < previousLayer.size(); i++) {
         sum += previousLayer[i].outputValue*weights[i];   
@@ -37,7 +36,7 @@ void Neuron::calculateHiddenDelta(layer& nextLayer, int index) {
     for(int i = 0; i < nextLayer.size(); i++) {
         sumNextLayer += nextLayer[i].weights[index]*nextLayer[i].delta;
     }
-    //this->delta = (outputValue)*(1-outputValue)*sumNextLayer; this is sigmoid derivative!!!
+    //this->delta = (outputValue)*(1-outputValue)*sumNextLayer; (sigmoid derivative). 
     this->delta = (1 - outputValue*outputValue)*sumNextLayer;
 }
 

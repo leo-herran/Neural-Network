@@ -36,7 +36,7 @@ void NeuralNetwork::enterData(vector<double>& input) {
     for(int i = 1; i < net.size(); i++) {
         layer previousLayer = net[i-1];
         for(int j = 0; j < net[i].size(); j++) {
-            net[i][j].enterData(previousLayer);
+            net[i][j].calculateOutput(previousLayer);
         }   
     }
 }

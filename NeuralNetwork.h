@@ -9,20 +9,22 @@ using namespace std;
 class NeuralNetwork {
     
 public:
-    NeuralNetwork(vector<int>& netStructure);
+    NeuralNetwork(int netStructure[], int numberOfLayers);
+    
     /* Runs inputValues through the network, calculates the error in the total
      output of the network, and updates weights for Neurons in the network to 
      minimize this error. */
-    void trainNetwork(vector<double>& inputValues, vector<double>& outputValues);
+    void trainNetwork(double inputValues[], double outputValues[]);
+    
     void printTotalError();
     vector<layer> net;
     
 private:
     double totalCurrentError;
-    void enterData(vector<double>& input);
+    void enterData(double input[]);
     
     /* Calculates total error, updates Neuron weights. */
-    void backPropagate(vector<double>& targetValues);
+    void backPropagate(double targetValues[]);
 };
 
 #endif	

@@ -6,9 +6,8 @@
 
 using namespace std;
 
-NeuralNetwork::NeuralNetwork(vector<int>& netStructure) {
-    int numberLayers = netStructure.size();
-    for(int i = 0; i < numberLayers; i++) {
+NeuralNetwork::NeuralNetwork(int netStructure[], int numberOfLayers) {
+    for(int i = 0; i < numberOfLayers; i++) {
         layer l;
         int previousLayerSize;
         (i == 0 ? previousLayerSize = 0 : previousLayerSize = netStructure[i-1]);
@@ -22,15 +21,15 @@ NeuralNetwork::NeuralNetwork(vector<int>& netStructure) {
     }
 }
 
-void NeuralNetwork::trainNetwork(vector<double>& inputValues, vector<double>& outputValues) {
+void NeuralNetwork::trainNetwork(double inputValues[], double outputValues[]) {
     enterData(inputValues);
     backPropagate(outputValues);
 }
 
-void NeuralNetwork::enterData(vector<double>& input) {
+void NeuralNetwork::enterData(double inputValues[]) {
     
-    for(int i = 0; i < input.size(); i++) {
-        net[0][i].outputValue = input[i]; //no transfer function on input neurons. 
+    for(int i = 0; i < net[0].size(); i++) {
+        net[0][i].outputValue = inputValues[i]; //no transfer function on input neurons. 
     }
     
     for(int i = 1; i < net.size(); i++) {
@@ -41,7 +40,7 @@ void NeuralNetwork::enterData(vector<double>& input) {
     }
 }
 
-void NeuralNetwork::backPropagate(vector<double>& targetValues) { 
+void NeuralNetwork::backPropagate(double targetValues[]) { 
     layer& outputLayer = net.back();
     
     double totalError = 0.0;

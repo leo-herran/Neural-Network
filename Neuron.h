@@ -26,7 +26,7 @@ public:
     private:
     static double learningRate;
     static double changeInWeight;
-    vector<double> weights; 
+    double* weights; 
     
     /* Partial derivative of the error with respect to weights from previous 
      * Neurons. Used in the back-propagation algorithm to update the weight, 

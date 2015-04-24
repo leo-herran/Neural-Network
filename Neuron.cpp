@@ -6,10 +6,11 @@
 #include <stdlib.h>
 
 Neuron::Neuron(int inDegree) {
+    double neuronWeights[inDegree];
     for(int i = 0; i < inDegree; i++) {
-        double w = getRandomWeight(); 
-        weights.push_back(w);
+        neuronWeights[i] = getRandomWeight();
     }
+    weights = neuronWeights;
 }
 
 void Neuron::calculateOutput(layer previousLayer){    

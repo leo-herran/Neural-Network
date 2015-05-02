@@ -11,7 +11,6 @@ public class NeuralNetwork {
 		
 		for(int i = 0; i < netStructure.size(); i++) {
 	        Layer currentLayer = new Layer();
-	        
 	        int previousLayerSize;
 	        
 	        if(i == 0) {
@@ -19,7 +18,6 @@ public class NeuralNetwork {
 	        } else {
 	        	previousLayerSize = netStructure.get(i-1);
 	        }
-	        
 	        
 	        for(int j = 0; j < netStructure.get(i); j++) {
 	            Neuron n = new Neuron(previousLayerSize);
@@ -37,7 +35,6 @@ public class NeuralNetwork {
 	}
 	
 	void enterData(ArrayList<Double> inputValues) {
-	    
 	    for(int i = 0; i < net.get(0).size(); i++) {
 	        net.get(0).getNeuron(i).outputValue = inputValues.get(i); //no transfer function on input neurons. 
 	    }

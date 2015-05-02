@@ -32,6 +32,7 @@ public class IO {
 	}
 	
 	public static void main(String[] args) throws IOException {
+		
 		String line;
 		InputStream fis = new FileInputStream(args[0]);
 		InputStreamReader isr = new InputStreamReader(fis);

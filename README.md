@@ -5,3 +5,5 @@ In the most general sense, an artificial neural networks is a construct containi
 The neural network implemented here is of the feedforward variety, meaning there are no cycles in the connections between neurons (data is always fed forward toward the output). 
 
 This network uses the backpropagation algorithm to learn patterns from its input.  
+
+The code in folder "c++Version" is older and obsolete. 

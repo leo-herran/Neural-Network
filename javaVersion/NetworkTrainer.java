@@ -8,7 +8,15 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 
-public class IO {
+public class NetworkTrainer {
+	
+	public NeuralNetwork network;
+	
+	
+	public NetworkTrainer(String trainingDataFilename) throws IOException {
+		network = createAndTrainNetwork(trainingDataFilename);
+		
+	}
 	
 	
 	static NeuralNetwork createNN(String[] structureDescription) {
@@ -21,6 +29,7 @@ public class IO {
 	    return new NeuralNetwork(structure);
 	}
 	
+	
 	static ArrayList<Double> parseDataString(String[] line, int startIndex, int numberOfElements) {
 		
 		ArrayList<Double> data = new ArrayList<Double>();
@@ -31,10 +40,9 @@ public class IO {
 	    return data;
 	}
 	
-	public static void main(String[] args) throws IOException {
-		
-		String line;
-		InputStream fis = new FileInputStream(args[0]);
+	
+	static NeuralNetwork createAndTrainNetwork(String filename) throws IOException {
+		InputStream fis = new FileInputStream(filename);
 		InputStreamReader isr = new InputStreamReader(fis);
 	    BufferedReader br = new BufferedReader(isr);
 	    
@@ -43,6 +51,8 @@ public class IO {
 	    int outputSize = Integer.parseInt(structureData[structureData.length - 1]);
 	    
 	    NeuralNetwork network = createNN(structureData);
+	    
+	    String line;
 	    String[] data;
 	    while ((line = br.readLine()) != null) {
 	    	data = line.split(" ");
@@ -59,11 +69,16 @@ public class IO {
 	    		String actual = String.format("%.4f", outputLayer.getNeuron(i).outputValue);
 	    		System.out.println(i + "  " + actual + " : " + outputData.get(i));
 	    	}
-	    	
-	    	//network.printTotalError();
-	    	
-	    
 	    }
+	    
+	    return network;
+		
+	}
+	
+	public static void main(String[] args) throws IOException {
+		
+		NetworkTrainer trainer = new NetworkTrainer(args[0]);
+		
 		
 	}
 }

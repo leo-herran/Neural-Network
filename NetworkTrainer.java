@@ -76,8 +76,8 @@ public class NetworkTrainer {
 		    	Layer outputLayer = netData.get(netData.size() - 1);
 		    	System.out.println("test---------");
 		    	for(int j = 0; j < outputLayer.size(); j++) {
-		    		String actual = String.format("%.4f", outputLayer.getNeuron(i).outputValue);
-		    		System.out.println(i + "  " + actual + " : " + outputData.get(i));
+		    		String actual = String.format("%.4f", outputLayer.getNeuron(j).outputValue);
+		    		System.out.println(i + "  " + actual + " : " + outputData.get(j));
 		    	}
 		    	//end testing output
 		    	

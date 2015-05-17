@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class NeuralNetwork {
 	
-	private ArrayList<Layer> net;
+	public ArrayList<Layer> net;
 	public double totalCurrentError;
 	
 	public NeuralNetwork(ArrayList<Integer> netStructure) {

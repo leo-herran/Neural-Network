@@ -49,7 +49,19 @@ public class IO {
 	    	ArrayList<Double> inputData = parseDataString(data, 0, inputSize);
 	    	ArrayList<Double> outputData = parseDataString(data, inputSize, outputSize);
 	    	network.trainNetwork(inputData, outputData);
-	    	network.printTotalError();
+	    	
+	    	ArrayList<Layer> netData = network.net;
+	    	Layer outputLayer = netData.get(netData.size() - 1);
+	    	
+	    	System.out.println("test---------");
+	    	
+	    	for(int i = 0; i < outputLayer.size(); i++) {
+	    		String actual = String.format("%.4f", outputLayer.getNeuron(i).outputValue);
+	    		System.out.println(i + "  " + actual + " : " + outputData.get(i));
+	    	}
+	    	
+	    	//network.printTotalError();
+	    	
 	    
 	    }
 		

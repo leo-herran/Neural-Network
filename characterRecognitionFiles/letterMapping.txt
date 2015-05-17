@@ -1,3 +1,6 @@
+This file describes the structure of the letters the network recognizes. For now the letters are mapped to a triple of 
+binary values which are mapped to a 9-by-9 grid of binary values which look like the letters they represent. 
+
 111
 111
 111 : 111 : 'E'

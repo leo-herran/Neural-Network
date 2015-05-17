@@ -1,9 +1,9 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class NetworkTrainer {
@@ -55,37 +55,40 @@ public class NetworkTrainer {
 	 * Constructs a new NeuralNetwork object and trains it on the data in filename. 
 	 * Returns the trained network. 
 	 */
-	static NeuralNetwork trainNetwork(String filename) throws IOException {
-		InputStream fis = new FileInputStream(filename);
-		InputStreamReader isr = new InputStreamReader(fis);
-	    BufferedReader br = new BufferedReader(isr);
-	    
-	    String[] structureData = br.readLine().split(" ");
-	    int inputSize = Integer.parseInt(structureData[0]);
-	    int outputSize = Integer.parseInt(structureData[structureData.length - 1]);
-	    
-	    NeuralNetwork network = createNetwork(structureData);
-	    
-	    String line;
-	    String[] data;
-	    while ((line = br.readLine()) != null) {
-	    	data = line.split(" ");
-	    	ArrayList<Double> inputData = parseDataString(data, 0, inputSize);
-	    	ArrayList<Double> outputData = parseDataString(data, inputSize, outputSize);
-	    	network.trainNetwork(inputData, outputData);
-	    	
-	    	ArrayList<Layer> netData = network.net;
-	    	Layer outputLayer = netData.get(netData.size() - 1);
-	    	
-	    	System.out.println("test---------");
-	    	
-	    	for(int i = 0; i < outputLayer.size(); i++) {
-	    		String actual = String.format("%.4f", outputLayer.getNeuron(i).outputValue);
-	    		System.out.println(i + "  " + actual + " : " + outputData.get(i));
-	    	}
-	    }
-	    
-	    return network;	
+	static NeuralNetwork trainNetwork(String filename) {
+		try {
+			List<String> fileData = Files.readAllLines(Paths.get(filename), Charset.defaultCharset());
+			String[] structureData = fileData.get(0).split(" ");
+			int inputSize = Integer.parseInt(structureData[0]);
+		    int outputSize = Integer.parseInt(structureData[structureData.length - 1]);
+		    
+		    NeuralNetwork network = createNetwork(structureData);
+		    String[] data;
+		    
+		    for(int i = 1; i < fileData.size(); i++) {
+		    	data = fileData.get(i).split(" ");
+		    	ArrayList<Double> inputData = parseDataString(data, 0, inputSize);
+		    	ArrayList<Double> outputData = parseDataString(data, inputSize, outputSize);
+		    	network.trainNetwork(inputData, outputData);
+		    	
+		    	// for testing output
+		    	ArrayList<Layer> netData = network.net;
+		    	Layer outputLayer = netData.get(netData.size() - 1);
+		    	System.out.println("test---------");
+		    	for(int j = 0; j < outputLayer.size(); j++) {
+		    		String actual = String.format("%.4f", outputLayer.getNeuron(i).outputValue);
+		    		System.out.println(i + "  " + actual + " : " + outputData.get(i));
+		    	}
+		    	//end testing output
+		    	
+		    }
+		    
+		    return network;
+		    
+		} catch(IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/*

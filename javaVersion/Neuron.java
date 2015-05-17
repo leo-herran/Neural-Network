@@ -25,6 +25,7 @@ public class Neuron {
 	    for(int i = 0; i < previousLayer.size(); i++) {
 	        sum += previousLayer.getNeuron(i).outputValue*weights.get(i).weight;   
 	    }
+	    
 	    //do transfer over sum
 	    outputValue = transferFunction(sum);
 	}

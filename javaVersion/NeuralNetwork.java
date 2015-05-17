@@ -48,6 +48,16 @@ public class NeuralNetwork {
 	        }   
 	    }
 	}
+	
+	ArrayList<Double> getOutputValues() {
+		ArrayList<Double> outputs = new ArrayList<Double>();
+		Layer outputLayer = net.get(net.size() - 1);
+		for(int i = 0; i < outputLayer.size(); i++) {
+			outputs.add(outputLayer.getNeuron(i).outputValue);
+		}
+		
+		return outputs;
+	}
 
 	void backPropagate(ArrayList<Double> targetValues) { 
 	    Layer outputLayer = net.get(net.size() - 1);

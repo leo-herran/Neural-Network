@@ -1,35 +1,46 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 
 public class NetworkTrainer {
 	
+	/* 
+	 * A class that creates, trains, and runs input through a Neural Network object. 
+	 */
+	
 	public NeuralNetwork network;
 	
-	
+	/*
+	 * trainingDataFilename: the file in which data for training the network is stored. This 
+	 * data should have one line at the top to specify how many layers/neurons per layer the 
+	 * network should have followed by lines containing input and output data.
+	 */
 	public NetworkTrainer(String trainingDataFilename) throws IOException {
-		network = createAndTrainNetwork(trainingDataFilename);
-		
+		network = trainNetwork(trainingDataFilename);
 	}
 	
-	
-	static NeuralNetwork createNN(String[] structureDescription) {
-		
+	/*
+	 * structureDescription: an array of integers specifying how many neurons each layer
+	 * in the network to be created will have.
+	 */
+	static NeuralNetwork createNetwork(String[] structureDescription) {
 	    ArrayList<Integer> structure = new ArrayList<Integer>();
 	    for(String s : structureDescription) {
 	    	structure.add(Integer.parseInt(s));
 	    }
-	    
 	    return new NeuralNetwork(structure);
 	}
 	
-	
+	/*
+	 * Parses line from index startIndex for numberOfElements items. line should contain 
+	 * doubles. 
+	 * 
+	 * @requires: startIndex + numberOfElements < line.length 
+	 */
 	static ArrayList<Double> parseDataString(String[] line, int startIndex, int numberOfElements) {
 		
 		ArrayList<Double> data = new ArrayList<Double>();
@@ -40,8 +51,11 @@ public class NetworkTrainer {
 	    return data;
 	}
 	
-	
-	static NeuralNetwork createAndTrainNetwork(String filename) throws IOException {
+	/*
+	 * Constructs a new NeuralNetwork object and trains it on the data in filename. 
+	 * Returns the trained network. 
+	 */
+	static NeuralNetwork trainNetwork(String filename) throws IOException {
 		InputStream fis = new FileInputStream(filename);
 		InputStreamReader isr = new InputStreamReader(fis);
 	    BufferedReader br = new BufferedReader(isr);
@@ -50,7 +64,7 @@ public class NetworkTrainer {
 	    int inputSize = Integer.parseInt(structureData[0]);
 	    int outputSize = Integer.parseInt(structureData[structureData.length - 1]);
 	    
-	    NeuralNetwork network = createNN(structureData);
+	    NeuralNetwork network = createNetwork(structureData);
 	    
 	    String line;
 	    String[] data;
@@ -71,14 +85,15 @@ public class NetworkTrainer {
 	    	}
 	    }
 	    
-	    return network;
-		
+	    return network;	
 	}
 	
+	/*
+	 * args[0] should contain the file containing training data. 
+	 */
 	public static void main(String[] args) throws IOException {
 		
 		NetworkTrainer trainer = new NetworkTrainer(args[0]);
-		
 		
 	}
 }

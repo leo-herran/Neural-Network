@@ -4,27 +4,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 
 public class characterRecognizer extends NetworkTrainer {
 	
-	private Map<Integer[], String> letterMap;
-	Scanner sc;
+	private HashMap<ArrayList<Integer>, String> letterMap;
 	
 	private static final double outputThreshold = 0.5; 
 
-	public characterRecognizer(String trainingDataFilename, String letterFilename, 
-			String letterDataFilename) throws IOException {
+	public characterRecognizer(String trainingDataFilename, String letterFilename) throws IOException {
 		super(trainingDataFilename);
 		createLetterMap(letterFilename);
-		sc = new Scanner(System.in);
 	}
 	
 	public void createLetterMap(String letterFilename) {
-		letterMap = new HashMap<Integer[], String>();
+		letterMap = new HashMap<ArrayList<Integer>, String>();
 		
 		try {
 			List<String> letterData = Files.readAllLines(Paths.get(letterFilename), Charset.defaultCharset());
@@ -32,13 +29,13 @@ public class characterRecognizer extends NetworkTrainer {
 			int sizeOfEncoding = Integer.parseInt(letterData.get(0));
 		    
 			String[] lineData;
-			Integer[] encoding;
+			ArrayList<Integer> encoding;
 			for(int i = 1; i < letterData.size(); i++) {
 				lineData = letterData.get(i).split(" ");
-				encoding = new Integer[sizeOfEncoding];
+				encoding = new ArrayList<Integer>(sizeOfEncoding);
 				
-				for(i = 0; i < sizeOfEncoding; i++) {
-					encoding[i] = Integer.parseInt(lineData[i]);
+				for(int j = 0; j < sizeOfEncoding; j++) {
+					encoding.add(Integer.parseInt(lineData[j]));
 				}
 				letterMap.put(encoding, lineData[sizeOfEncoding]);
 				
@@ -50,11 +47,11 @@ public class characterRecognizer extends NetworkTrainer {
 		
 	}
 	
-	public void runInput(String letterDataFilename) {
+	public void runInput(String letterInputFilename) {
 		
 		try {
 			ArrayList<Integer> result = new ArrayList<Integer>();
-			List<String> inputData = Files.readAllLines(Paths.get(letterDataFilename), Charset.defaultCharset());
+			List<String> inputData = Files.readAllLines(Paths.get(letterInputFilename), Charset.defaultCharset());
 			
 			
 			String[] inputLine;
@@ -79,17 +76,18 @@ public class characterRecognizer extends NetworkTrainer {
 	}
 	
 	public String getCharacter(ArrayList<Double> outputEncoding) {
-		Integer[] out = new Integer[outputEncoding.size()];
+		ArrayList<Integer> out = new ArrayList<Integer>(outputEncoding.size());
 		for(int i = 0; i < outputEncoding.size(); i++) {
 			Double d = outputEncoding.get(i);
 			if(d > outputThreshold) {
-				out[i] = 1;
+				out.add(1);
 			} else if (d < -1*outputThreshold) {
-				out[i] = 0;
+				out.add(0);
 			} else {
-				out[i] = -1; //inconclusive/ambiguous output
+				out.add(-1); //inconclusive/ambiguous output
 			}
 		}
+		
 		
 		if(letterMap.containsKey(out)) {
 			return letterMap.get(out);
@@ -101,8 +99,7 @@ public class characterRecognizer extends NetworkTrainer {
 	}
 
 	public static void main(String[] args) throws IOException {
-		characterRecognizer rec = new characterRecognizer(args[0], args[1], args[2]);
-		
-		
+		characterRecognizer rec = new characterRecognizer(args[0], args[1]);
+		rec.runInput(args[2]);
 	}
 }

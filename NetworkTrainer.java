@@ -12,7 +12,7 @@ public class NetworkTrainer {
 	 * A class that creates, trains, and runs input through a Neural Network object. 
 	 */
 	
-	public NeuralNetwork network;
+	public static NeuralNetwork network;
 	
 	/*
 	 * trainingDataFilename: the file in which data for training the network is stored. This 

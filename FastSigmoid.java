@@ -11,17 +11,14 @@ public class FastSigmoid {
 	public HashMap<Double, Double> sig;
 	
 	public FastSigmoid() {
-		
 		fillMap();
-		
 	}
 	
 	public void fillMap() {
 		sig = new HashMap<Double, Double>(); 
 		
 		try {
-			//List<String> sigmoidData = Files.readAllLines(Paths.get("sigmoidData.txt"), Charset.defaultCharset());
-			List<String> sigmoidData = Files.readAllLines(Paths.get("C:\\Users\\Leo\\Documents\\NetBeansProjects\\NN\\sigmoidData.txt"), Charset.defaultCharset());
+			List<String> sigmoidData = Files.readAllLines(Paths.get("sigmoidData.txt"), Charset.defaultCharset());
 			String[] inputLine;
 			for(int i = 0; i < sigmoidData.size(); i++) {
 				inputLine = sigmoidData.get(i).split(" ");
@@ -57,10 +54,5 @@ public class FastSigmoid {
 		Double sigValue = getValue(input); 
 		return sigValue*(1 - sigValue);
 	}
-	
-//	public static void main(String[] args) {	
-//		Random r = new Random();
-//		System.out.println(r.nextDouble()/10.0);
-//	}
 	
 }

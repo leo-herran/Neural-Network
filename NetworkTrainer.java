@@ -65,22 +65,24 @@ public class NetworkTrainer {
 		    NeuralNetwork network = createNetwork(structureData);
 		    String[] data;
 		    
-		    for(int i = 1; i < fileData.size(); i++) {
+		    int trainingCycles = Integer.parseInt(fileData.get(1));
+		    
+		    ArrayList<TrainingSample> trainingData = new ArrayList<TrainingSample>();
+		    
+		    for(int i = 2; i < fileData.size(); i++) {
 		    	data = fileData.get(i).split(" ");
 		    	ArrayList<Double> inputData = parseDataString(data, 0, inputSize);
 		    	ArrayList<Double> outputData = parseDataString(data, inputSize, outputSize);
-		    	network.trainNetwork(inputData, outputData);
-		    	
-		    	// for testing output
-		    	ArrayList<Layer> netData = network.net;
-		    	Layer outputLayer = netData.get(netData.size() - 1);
-		    	System.out.println("test---------");
-		    	for(int j = 0; j < outputLayer.size(); j++) {
-		    		String actual = String.format("%.4f", outputLayer.getNeuron(j).outputValue);
-		    		System.out.println(i + "  " + actual + " : " + outputData.get(j));
+		    	trainingData.add(new TrainingSample(inputData, outputData));
+		    }
+		    
+		    for(int i = 0; i < trainingCycles; i++) {
+		    	for(TrainingSample sample : trainingData) {
+		    		network.trainNetwork(sample.inputs, sample.outputs);
 		    	}
-		    	//end testing output
 		    	
+		    	System.out.print("test " + i + ": ");
+		    	network.printTotalError();
 		    }
 		    
 		    return network;
@@ -98,5 +100,18 @@ public class NetworkTrainer {
 		
 		NetworkTrainer trainer = new NetworkTrainer(args[0]);
 		
+	}
+	
+	
+	
+}
+
+final class TrainingSample {
+	public ArrayList<Double> inputs;
+	public ArrayList<Double> outputs;
+	
+	public TrainingSample(ArrayList<Double> inputs, ArrayList<Double> outputs) {
+		this.inputs = inputs;
+		this.outputs = outputs;
 	}
 }

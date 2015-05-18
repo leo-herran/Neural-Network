@@ -16,3 +16,7 @@ binary values which are mapped to a 9-by-9 grid of binary values which look like
 010
 111
 101 : 011 : 'A'
+
+101
+010
+101 : 101 : 'X'

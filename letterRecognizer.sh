@@ -1,5 +1,7 @@
 #!/bin/bash
 
+letterData="characterRecognitionFiles/5letterData.txt"
+letterMapping="characterRecognitionFiles/letterMappingData.txt"
 input=""
 
 printInput() {
@@ -31,7 +33,13 @@ for number in $input; do
   shiftedInput=$shiftedInput" $nextNum"
 done
 
-printInput
+echo $shiftedInput > letterInput.txt
 
-echo -n " equals "
-echo "a"
+java characterRecognizer $letterData $letterMapping letterInput.txt > output.txt
+
+printInput
+echo -n " is the letter "
+cat output.txt
+
+rm letterInput.txt
+rm output.txt

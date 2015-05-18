@@ -81,8 +81,10 @@ public class NetworkTrainer {
 		    		network.trainNetwork(sample.inputs, sample.outputs);
 		    	}
 		    	
+		    	/*
 		    	System.out.print("test " + i + ": ");
 		    	network.printTotalError();
+		    	*/
 		    }
 		    
 		    return network;

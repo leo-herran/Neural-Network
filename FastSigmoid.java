@@ -7,13 +7,19 @@ import java.util.List;
 import java.util.Random;
 
 public class FastSigmoid {
-	
+
+	/*
+	 * A map that approximates the sigmoid function. 
+	 */
 	public HashMap<Double, Double> sig;
 	
 	public FastSigmoid() {
 		fillMap();
 	}
-	
+
+	/*
+	 * Populates the map with values. 
+	 */	
 	public void fillMap() {
 		sig = new HashMap<Double, Double>(); 
 		
@@ -28,7 +34,11 @@ public class FastSigmoid {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/*
+	 * Round the given input value to two decimal places and get
+	 * the resulting output value from the sigmoid map.
+	 */	
 	public Double getValue(Double input) {
 		Double roundFactor = 100.0;
 		Double result = input*roundFactor;
@@ -49,7 +59,10 @@ public class FastSigmoid {
 		
 		return 2*result - 1.0;
 	}
-	
+
+	/*
+	 * Returns the derivative of the sigmoid of the given input value.
+	 */	
 	public Double derivative(Double input) {
 		Double sigValue = getValue(input); 
 		return sigValue*(1 - sigValue);

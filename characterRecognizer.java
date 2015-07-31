@@ -10,9 +10,16 @@ import java.util.Map;
 
 
 public class characterRecognizer extends NetworkTrainer {
-	
+
+	/* 
+	 * A map from three boolean values to single character.
+	 */	
 	private HashMap<ArrayList<Integer>, String> letterMap;
-	
+
+	/* 
+	 * If the neural network outputs a value higher/lower than this then it is assumed
+	 * to be a 1/-1. Otherwise, the output cannot be determined. 	
+	 */
 	private static final double outputThreshold = 0.5; 
 
 	public characterRecognizer(String trainingDataFilename, String letterFilename) throws IOException {

@@ -61,7 +61,6 @@ public class Neuron {
 	    for(int i = 0; i < previousLayer.size(); i++) {
 	        Neuron n = previousLayer.getNeuron(i);
 	        change = learningRate * delta * n.outputValue + momentum * weights.get(i).previousChangeInWeight;
-	        //change = -1.0*change;
 	        
 	        //add change to weight for this neuron, set previousChangeIW to change just computed
 	        weights.set(i, new Weight(weights.get(i).weight + change, change)); 

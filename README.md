@@ -9,8 +9,8 @@ One way I was successfully able to apply my implementation was rudimentary ASCII
 
 ![alt text](http://i.imgur.com/Rp98Grf.png?1 "Letter mapping scheme.")
 
-Then network then outputs three values which represent the density of 1s in each row. For example, when given the inputs for the letter T the network outputs <code>[1, 0, 0]</code> because there are three 1s in the top row and only one 1 in the bottom two rows. As of now the network converges on a training set containing five characters:
+Then network then outputs three values which represent the density of 1s in each row. For example, when given the inputs for the letter T the network outputs <code>[1, 0, 0]</code> because there are three 1s in the top row and only one 1 in the bottom two rows. As of now the network is able to converge on a training set with eight characters (which is the maximum number possible using three bits as output):
 
-![alt text](http://i.imgur.com/SZujtG6.png?1)
+![alt text](http://i.imgur.com/CNJAhOb.png?1)
 
 

@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +56,12 @@ public class NetworkTrainer {
 	 */
 	static NeuralNetwork trainNetwork(String filename) {
 		try {
-			List<String> fileData = Files.readAllLines(Paths.get(filename), Charset.defaultCharset());
+			Path filePath = Paths.get(filename);
+			if(!Files.exists(filePath)) {
+				System.out.println("That file doesn't exist.");
+				System.exit(0);
+			}	
+			List<String> fileData = Files.readAllLines(filePath, Charset.defaultCharset());
 			String[] structureData = fileData.get(0).split(" ");
 			int inputSize = Integer.parseInt(structureData[0]);
 		    int outputSize = Integer.parseInt(structureData[structureData.length - 1]);
@@ -99,7 +103,11 @@ public class NetworkTrainer {
 	 * args[0] should contain the file containing training data. 
 	 */
 	public static void main(String[] args) throws IOException {
-		
+	
+		if(args.length != 1) {
+			System.out.println("usage: java NetworkTrainer (inputfile)");
+			System.exit(0);
+		}	
 		NetworkTrainer trainer = new NetworkTrainer(args[0]);
 		
 	}

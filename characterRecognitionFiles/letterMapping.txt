@@ -2,21 +2,21 @@ This file describes the structure of the letters the network recognizes. For now
 binary values which are mapped to a 9-by-9 grid of binary values which look like the letters they represent.
 
 111
-111
-111 : 111 : 'E'
+111 -> 111 -> 'E'
+111 
 
 111
+010 -> 100 -> 'T'
 010
-010 : 100 : 'T'
 
 100
-100
-111 : 001 : 'L'
+100 -> 001 -> 'L'
+111 
 
 010
-111
-101 : 011 : 'A'
+111 -> 011 -> 'A'
+101
 
 101
-010
-101 : 101 : 'X'
+010 -> 101 -> 'X'
+101

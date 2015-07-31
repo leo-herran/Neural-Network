@@ -56,11 +56,8 @@ public class NetworkTrainer {
 	 */
 	static NeuralNetwork trainNetwork(String filename) {
 		try {
-			Path filePath = Paths.get(filename);
-			if(!Files.exists(filePath)) {
-				System.out.println("That file doesn't exist.");
-				System.exit(0);
-			}	
+			Path filePath = getPathAndCheckFileValid(filename);
+
 			List<String> fileData = Files.readAllLines(filePath, Charset.defaultCharset());
 			String[] structureData = fileData.get(0).split(" ");
 			int inputSize = Integer.parseInt(structureData[0]);
@@ -98,14 +95,23 @@ public class NetworkTrainer {
 			return null;
 		}
 	}
-	
+
+	public static Path getPathAndCheckFileValid(String filename) {
+		Path filePath = Paths.get(filename);
+		if(!Files.exists(filePath)) {
+			System.out.println("That file doesn't exist.");
+			System.exit(0);
+		}	
+		return filePath;
+	}	
+
 	/*
 	 * args[0] should contain the file containing training data. 
 	 */
 	public static void main(String[] args) throws IOException {
 	
 		if(args.length != 1) {
-			System.out.println("usage: java NetworkTrainer (inputfile)");
+			System.out.println("usage: java NetworkTrainer (trainingData)");
 			System.exit(0);
 		}	
 		NetworkTrainer trainer = new NetworkTrainer(args[0]);

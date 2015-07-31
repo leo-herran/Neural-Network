@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -28,10 +27,11 @@ public class characterRecognizer extends NetworkTrainer {
 	}
 	
 	public void createLetterMap(String letterFilename) {
+		Path letterPath = super.getPathAndCheckFileValid(letterFilename);	
 		letterMap = new HashMap<ArrayList<Integer>, String>();
 		
 		try {
-			List<String> letterData = Files.readAllLines(Paths.get(letterFilename), Charset.defaultCharset());
+			List<String> letterData = Files.readAllLines(letterPath, Charset.defaultCharset());
 			
 			int sizeOfEncoding = Integer.parseInt(letterData.get(0));
 		    
@@ -57,9 +57,9 @@ public class characterRecognizer extends NetworkTrainer {
 	public void runInput(String letterInputFilename) {
 		
 		try {
+			Path inputPath = super.getPathAndCheckFileValid(letterInputFilename);	
 			ArrayList<Integer> result = new ArrayList<Integer>();
-			List<String> inputData = Files.readAllLines(Paths.get(letterInputFilename), Charset.defaultCharset());
-			
+			List<String> inputData = Files.readAllLines(inputPath, Charset.defaultCharset());
 			
 			String[] inputLine;
 			ArrayList<Double> inputValues = new ArrayList<Double>();
@@ -95,7 +95,6 @@ public class characterRecognizer extends NetworkTrainer {
 			}
 		}
 		
-		
 		if(letterMap.containsKey(out)) {
 			return letterMap.get(out);
 		} else {
@@ -106,6 +105,10 @@ public class characterRecognizer extends NetworkTrainer {
 	}
 
 	public static void main(String[] args) throws IOException {
+		if(args.length != 3) {
+			System.out.println("usage: java characterRecognizer (trainingData) (letterMappingData) (inputData)");
+			System.exit(0);
+		}
 		characterRecognizer rec = new characterRecognizer(args[0], args[1]);
 		rec.runInput(args[2]);
 	}

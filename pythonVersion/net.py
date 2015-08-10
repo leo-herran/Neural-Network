@@ -1,13 +1,20 @@
-
+import math, random;
 
 def makeRandomMatrix(x, y):
     matrix = [];
     for i in range(x):
         matrix.append([]); 
         for j in range(y):
-            matrix[i].append(1.0);
+            matrix[i].append(randomInRange(-1.0, 1.0));
 
     return matrix;
+
+
+def transferFunc(a):
+    return math.tanh(a);
+
+def randomInRange(low, high):
+    return low + random.random()*(high - low);
 
 class NeuralNetwork:
 
@@ -23,17 +30,17 @@ class NeuralNetwork:
 
         #set output values for input layer.
         for i in range(self.netStructure[0]):
-            self.network[0][i] = inputs[i];
+            self.network[0].outputs[i] = inputs[i];
 
         for i in range(1, len(self.network)):
             cur = self.network[i];
             prev = self.network[i-1];
-            for j in range(len(cur)):
+            for j in range(self.netStructure[i]):
                 sum = 0.0;
-                for k in range(len(prev)):
+                for k in range(self.netStructure[i-1]):
                     sum = sum + cur.weights[j][k]*cur.outputs[j];
 
-                cur.outputs[j] = sigmoid(sum);
+                cur.outputs[j] = transferFunc(sum);
 
 
 
@@ -58,4 +65,7 @@ class Layer:
 
 m = makeRandomMatrix(2, 3);
 n = NeuralNetwork([2, 4, 2]);
-print(n);
+print(n.network[2].outputs);
+n.feedForward([1, 1]);
+print(n.network[2].outputs);
+
